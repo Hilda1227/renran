@@ -1,0 +1,22 @@
+<!--index.wxml-->
+<view class="container">
+    <swiper
+        wx:if="{{!showCanvas}}"
+        duration="{{300}}"
+        current-item-id="{{currentItemId}}"
+        >
+        <block wx:for="{{records}}" wx:key="{{ item.id }}">
+            <swiper-item item-id="{{ item.id }}">
+                <view class="wrap">
+                    <image src="{{item.img_url}}"/>       
+                    <view class="intro">{{item.intro}}</view>
+                    <text class="days"><text class="num">{{item.days}}</text>天</text>
+                    <view class="date">{{item.date}}</view>
+                    <image bindtap="share" class="share" src="../../img/share.png"/> 
+                </view>
+            </swiper-item>
+        </block>
+    </swiper>
+    <canvas wx:else canvas-id="shareCanvas" style="width:100%;height:100%"></canvas> 
+</view>
+

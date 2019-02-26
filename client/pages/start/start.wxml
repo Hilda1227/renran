@@ -1,0 +1,9 @@
+<!--index.wxml-->
+<view class="container">
+  <view>
+      <image class="logo" src="../../img/start_logo.png" mode="cover"></image>
+  </view>
+  <view class="slogan">
+    <text class="user-motto">妳去生活，我來記憶。</text>
+  </view>
+</view>
