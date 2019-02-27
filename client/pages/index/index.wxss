@@ -1,14 +1,14 @@
 .container{
     background: #F2F5F8;
 }
-.slide{
+scroll-view.slide{
     width: 100%;
+    height: 100%;
     padding:  28rpx 22rpx;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
-
 
 .slogan{
     font-size: 20px;
@@ -18,14 +18,14 @@
 }
 
 
-.intro{
+.name{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     font-size: 14px;
     margin: 0 40rpx;
 }
-.intro text{
+.name text{
     margin-bottom: 35rpx;
 }
 
@@ -44,6 +44,7 @@
     justify-content: space-around;
     background: white;
     border-radius:5px;
+    margin-bottom: 30rpx;
 }
 .record .img_days{
     display: flex;
@@ -72,7 +73,7 @@
     align-items: center;
     margin-bottom: 40rpx;
 }
-.record .info .intro{
+.record .info .name{
     color: #405368;
     font-size: 14px;
     display: inline-block;
@@ -89,17 +90,17 @@ button.record{
     width: 208rpx;
     height: 84rpx;
     bottom: 132rpx;
-    position: fixed;
-    
+    position: fixed;   
     background-color: #E2CD47;
     color: #394A5D;
     border-radius:12px;
     line-height: 84rpx;
-    font-size: 40rpx;
+    font-size: 20px;
+    font-weight: 500;
     box-shadow:0 0 2px 2px #E2CD47 inset;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+
 }
-
-
 /* button.record::after{
     content: ' ';
     height: 0px;

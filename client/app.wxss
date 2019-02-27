@@ -13,3 +13,21 @@ page{
   color: #405368;
   position: relative;
 } 
+
+/* 覆盖默认样式 */
+button {
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+button::after {
+  border: none;
+}
+input {
+  outline: none;
+  border: none;
+  list-style: none;
+}
+
+

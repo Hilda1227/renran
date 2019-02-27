@@ -7,22 +7,22 @@ Page({
     data: {
       records: [
         {
-            img_url: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-            intro: '第一次见到你已经过去',
+            img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
+            name: '第一次见到你已经过去',
             date: '2019年2月9日',
             days: '12',
             id: '1'
         },
         {
-          img_url: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-          intro: '初次见面',
+          img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
+          name: '初次见面',
           date: '2019年2月9日',
           days: '129',
           id: '2'
         },
         {
-          img_url: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-          intro: '初次见面',
+          img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
+          name: '初次见面',
           date: '2019年2月9日',
           days: '129',
           id: '3'
@@ -34,13 +34,22 @@ Page({
     onLoad(){
       this.setData({currentItemId: this.options.id});      
     },
-
+    onChange(e) {
+      this.setData({ currentItemId: e.detail.currentItemId })
+    },
+    onShareAppMessage() {
+      return {
+        title: '转发',
+        path: '/detail/detail'
+      }
+    },
     share(){
+      // this.onShareAppMessage();
       this.setData({showCanvas: true});
-      const wxGetImageInfo = function(img_url){
+      const wxGetImageInfo = function(img_src){
         return new Promise(function(resolve, reject){
           wx.getImageInfo({
-            src: img_url,
+            src: img_src,
             success: res => {resolve(res)},
             fail: error => {reject(error)}
           })
@@ -54,10 +63,13 @@ Page({
       .then(res => {
         let currentRecord = this.data.records.filter((item) => item.id == this.data.currentItemId)[0];
         const ctx = wx.createCanvasContext('shareCanvas');
-        const {screenWidth, screenHeight} = wx.getSystemInfoSync();
+        const { screenWidth, screenHeight } = wx.getSystemInfoSync();
         const r = screenWidth * 0.3, 
               marginTop = screenWidth * 0.14, 
               marginLeft = screenWidth / 2 - r;
+
+        ctx.setFillStyle('white')
+        ctx.fillRect(0, 0, screenWidth, screenHeight);
 
         ctx.save()
         ctx.beginPath()
@@ -70,10 +82,10 @@ Page({
 
         ctx.setTextAlign('center'); // 文字居中
 
-      // 简介
+      // 名字
         ctx.setFillStyle('#405368'); // 文字颜色：黑色
         ctx.setFontSize(20); // 文字字号：22px
-        ctx.fillText(currentRecord.intro, screenWidth / 2, endY + marginTop);
+        ctx.fillText(currentRecord.name, screenWidth / 2, endY + marginTop);
         endY += marginTop + 30;
       // 天数
         ctx.setFillStyle('#405368'); // 文字颜色：黑色
@@ -104,6 +116,10 @@ Page({
         wx.canvasToTempFilePath({
           canvasId: 'shareCanvas',
           success(res) {
+            wx.previewImage({
+              current: res.tempFilePath, // 当前显示图片的http链接
+              urls: [res.tempFilePath] // 需要预览的图片http链接列表
+            })
             console.log(res.tempFilePath)
           }
         })

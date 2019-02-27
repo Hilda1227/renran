@@ -4,15 +4,17 @@
         wx:if="{{!showCanvas}}"
         duration="{{300}}"
         current-item-id="{{currentItemId}}"
+        bindchange="onChange"
         >
         <block wx:for="{{records}}" wx:key="{{ item.id }}">
             <swiper-item item-id="{{ item.id }}">
                 <view class="wrap">
-                    <image src="{{item.img_url}}"/>       
-                    <view class="intro">{{item.intro}}</view>
+                    <image src="{{item.img_src}}"/>       
+                    <view class="name">{{item.name}}</view>
                     <text class="days"><text class="num">{{item.days}}</text>天</text>
                     <view class="date">{{item.date}}</view>
-                    <image bindtap="share" class="share" src="../../img/share.png"/> 
+                    
+                    <image class="share" bindtap="share" src="../../img/share.png"/>
                 </view>
             </swiper-item>
         </block>

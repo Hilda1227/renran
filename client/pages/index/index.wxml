@@ -1,10 +1,10 @@
 <!--index.wxml-->
 <view class="container">
-  <scroll-view class="slide" scroll-y>
+  <scroll-view class="slide" bindscroll="onScroll" scroll-y>
 
     <text class="slogan">妳去生活，我來記憶。</text>  
     
-    <view class="intro" wx:if="{{ !records.length }}">
+    <view class="name" wx:if="{{ !records.length }}">
         <text>妳可以告訴我關於妳的過去和未來，我會幫妳保管好。</text>
         <text>君の昔と未来についてのこと、全部、私に教えてください。私、必ず大切に預かりします。</text>
         <text>Tell me about your past and future, I will take care of them for you.</text>
@@ -19,11 +19,11 @@
             data-record="{{item}}"
             >
             <view class="img_days">
-                <image src="{{item.img_url}}"></image>
+                <image src="{{item.img_src}}"></image>
                 <text class="days"><text class="num">{{item.days}}</text>天</text>
             </view>
             <view class="info">
-                <text class="intro">{{item.intro}}</text>
+                <text class="name">{{item.name}}</text>
                 <text class="date">{{item.date}}</text>
             </view>
         </view>
@@ -31,5 +31,5 @@
 
   </scroll-view>
 
-  <button class="record" >记录</button>    
+  <button animation="{{animationData}}" class="record" bindtap="record">记录</button>    
 </view>

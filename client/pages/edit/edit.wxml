@@ -1,0 +1,24 @@
+<!--index.wxml-->
+<view class="container" >
+    <view class="top_wrap">
+        <view class="edit">
+            <textarea class="edit_text" placeholder="那件事"
+                value="{{ name }}" 
+                maxlength="{{10}}" 
+                auto-focus
+                bindinput="onInput"
+                >
+            </textarea>
+            <text class="tip">{{ name.length }}/10</text>
+            <view class="edit_img" bindtap="chooseImg">
+                <image wx:if="{{ img_src }}" src="{{img_src}}" />
+            </view>
+        </view>
+        <picker mode="date" bindchange="changeDate" value="{{ _date }}" >时间 {{_date}}
+            <image class="arow" src="../../img/arow.png" />
+        </picker>
+    </view>
+    
+    <switch checked="{{ isOnce }}" class="once" checked="{{ false }}" bindchange="switchChange" color="#FBE44F"></switch>
+    <button bindtap="save" class="save">完成</button> 
+</view>

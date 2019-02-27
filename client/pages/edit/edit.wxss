@@ -1,0 +1,91 @@
+.container{
+    background: #F2F5F8;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.top_wrap{
+    background: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.edit{
+    flex-flow: 1;
+    height: 494rpx;
+    position: relative;
+    margin: 0 50rpx 20rpx 50rpx;
+}
+.edit .edit_text{
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+}
+.edit .edit_img{
+    width: 198rpx;
+    height: 198rpx;
+    position: absolute;
+    bottom: 0;
+    background: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F2F5F8;
+    overflow: hidden;
+}
+.edit .edit_img::after{
+    content: '+';
+    display: inline-block;
+    height: 198rpx;
+    font-size: 130rpx;
+    font-weight: 100;
+    line-height: 198rpx;
+    position: absolute;
+    color: #aaa;
+    z-index: 10;
+}
+.edit .edit_img image{
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+}
+.edit .tip{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size:18px;
+    color:#B3BAC3;
+}
+.top_wrap picker{
+    position: relative;
+    height: 146rpx;
+    flex-grow: 1;
+    margin: 0 50rpx;
+    line-height: 146rpx;
+}
+.top_wrap picker .arow{
+    position: absolute;
+    right: 0;
+    width: 20rpx;
+    height: 32rpx;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+switch.once{
+    margin-top: 50rpx;
+    color: #FBE44F;
+    display: inline-block;
+    align-self: flex-end;
+    margin-right: 50rpx;
+}
+
+
+button.save{
+    width: 650rpx;
+    font-size: 18px;
+    margin-top: 50rpx;
+    background: #FBE44F;
+    color: #fff;
+}

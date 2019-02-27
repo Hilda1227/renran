@@ -1,12 +1,14 @@
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+const formatTime = (date, str) => {
+  let year = date.getFullYear()
+  let month = date.getMonth() + 1
+  let day = date.getDate()
+  if(!str){
+    return `${year}年${month}月${day}日`;
+  } else {
+    month = String(month).padStart(2, '0');
+    day = String(day).padStart(2, '0');
+    return [year, month, day].join('-');
+  }
 }
 
 const formatNumber = n => {
