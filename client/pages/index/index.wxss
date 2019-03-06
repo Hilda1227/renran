@@ -1,10 +1,11 @@
 .container{
     background: #F2F5F8;
+    z-index: 10;
 }
 scroll-view.slide{
     width: 100%;
     height: 100%;
-    padding:  28rpx 22rpx;
+    padding:  0 22rpx;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -14,7 +15,7 @@ scroll-view.slide{
     font-size: 20px;
     align-self: flex-start;
     display: inline-block;
-    margin: 0 0 28rpx 40rpx;
+    margin: 22rpx 0 28rpx 40rpx;
 }
 
 
@@ -51,22 +52,45 @@ scroll-view.slide{
     justify-content: flex-start;
     align-items: center;
 }
-.record .img_days image{
-    width:134rpx;
+.record .img_days .image{
     height:134rpx;
+    width:134rpx;
     border-radius:50%;
-    margin: auto 26rpx;
+    margin: auto 20rpx;
+    border-radius: 50%;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
 }
 .record .img_days .days{
     color: #9B9B9B;
     font-size: 12px;
     align-self: flex-end;
+    display: flex;
+    justify-content: flex-start;
+    flex-grow: 1;
+    align-items: flex-end;
+    padding-bottom: 30rpx;
 }
-.record .img_days .days .num{
+.record .img_days .days .num_pass{
     font-size:72rpx;
+    line-height: 72rpx;
+    color: #aaa;
+    font-weight: bold;
+
+}
+.record .img_days .days .num_future{
+    font-size:72rpx;
+    line-height: 72rpx;
     color: #405368;
     font-weight: bold;
 }
+/* .record .img_days .days .tian{
+    height: 40rpx;
+} */
 .record .info{
     display: flex;
     flex-direction: column;
@@ -84,7 +108,37 @@ scroll-view.slide{
     font-size: 12px;
 }
 
+.loading{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loading view{
+    width: 6px;
+    height: 6px;
+    background: #959595;
+    border-radius: 50%;
+    margin: 4px;
+}
+.loading view:nth-child(1){
+    animation: loading 1000ms ease -800ms infinite;
+}
+.loading view:nth-child(2){
+    animation: loading 1000ms ease -400ms infinite;
+}
+.loading view:nth-child(3){
+    animation: loading 1000ms ease 0ms infinite;
+}
 
+@keyframes loading{
+    0%{
+        opacity: 1;   
+    }
+    100%{
+        opacity: 0.4;
+    }
+}
 
 button.record{
     width: 208rpx;
@@ -101,7 +155,7 @@ button.record{
     transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 
 }
-/* button.record::after{
+button.record::after{
     content: ' ';
     height: 0px;
     width: 100%;
@@ -110,4 +164,4 @@ button.record{
     display: inline-block;
     margin-top: 214rpx;
     border-bottom: 2px dashed #394A5D;
-} */
+}

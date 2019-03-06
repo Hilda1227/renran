@@ -18,7 +18,7 @@
 }
 .edit .edit_text{
     width: 100%;
-    height: 100%;
+    height: 296rpx;
     font-size: 20px;
 }
 .edit .edit_img{
@@ -33,7 +33,7 @@
     background: #F2F5F8;
     overflow: hidden;
 }
-.edit .edit_img::after{
+/* .edit .edit_img::after{
     content: '+';
     display: inline-block;
     height: 198rpx;
@@ -43,11 +43,18 @@
     position: absolute;
     color: #aaa;
     z-index: 10;
-}
-.edit .edit_img image{
+} */
+.edit .edit_img .image{
     width: 100%;
     height: 100%;
     z-index: 11;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    
 }
 .edit .tip{
     position: absolute;

@@ -1,35 +1,52 @@
 <!--index.wxml-->
-<view class="container">
-  <scroll-view class="slide" bindscroll="onScroll" scroll-y>
+<view class="container" bindtap="onContainTap">
+    <menu 
+        cur_id="{{cur_id}}" 
+        touches="{{touches}}" 
+        showMenu="{{showMenu}}"
+        bind:delete="onDelete"
+        >
+    </menu>
+  <scroll-view class="slide" bindscroll="onScroll" bindscrolltolower="loadMore" scroll-y>
 
-    <text class="slogan">妳去生活，我來記憶。</text>  
-    
-    <view class="name" wx:if="{{ !records.length }}">
-        <text>妳可以告訴我關於妳的過去和未來，我會幫妳保管好。</text>
-        <text>君の昔と未来についてのこと、全部、私に教えてください。私、必ず大切に預かりします。</text>
-        <text>Tell me about your past and future, I will take care of them for you.</text>
-    </view>
+        <text class="slogan">妳去生活，我來記憶。</text>  
 
-  
-    <view wx:else class="records">
-        <view wx:for="{{ records }}" 
-            class="record" 
-            wx:key="{{ item.id }}"
-            bindtap="onTap"
-            data-record="{{item}}"
-            >
-            <view class="img_days">
-                <image src="{{item.img_src}}"></image>
-                <text class="days"><text class="num">{{item.days}}</text>天</text>
-            </view>
-            <view class="info">
-                <text class="name">{{item.name}}</text>
-                <text class="date">{{item.date}}</text>
-            </view>
+        <view class="name" wx:if="{{ !records.length }}">
+            <text>妳可以告訴我關於妳的過去和未來，我會幫妳保管好。</text>
+            <text>君の昔と未来についてのこと、全部、私に教えてください。私、必ず大切に預かりします。</text>
+            <text>Tell me about your past and future, I will take care of them for you.</text>
+            <text>너는 나에게 너의 과거와 미래를 말해 줄 수 있다. 내가 잘 지킬 거야.</text>
         </view>
-    </view>
 
-  </scroll-view>
 
-  <button animation="{{animationData}}" class="record" bindtap="record">记录</button>    
+        <view wx:else class="records">
+            <view wx:for="{{ records }}" 
+                class="record" 
+                wx:key="{{ item.id }}"
+                bindtap="onTap"
+                data-record="{{ item }}"
+                bindlongpress="onLongPress" 
+                >
+                <view class="img_days">
+                    <view  class="image" style="background-image: url('{{item.img_src}}')"></view>
+                    <view class="days">
+                        <text class="{{item.days >= 0 ? 'num_pass' : 'num_future'}}">
+                            {{item.days > 0 ? item.days : -item.days}}
+                        </text>
+                        <text class="tian">天</text>
+                    </view>
+                </view>
+                <view class="info">
+                    <text class="name">{{item.name}}</text>
+                    <text  class="date">{{item.date}}</text>
+                </view>
+            </view>
+            
+        </view>
+        <view wx:if="{{has_more}}" class="loading">
+            <view></view><view></view><view></view>
+        </view>
+    </scroll-view>
+
+    <button animation="{{animationData}}" class="record" bindtap="record">记录</button>    
 </view>

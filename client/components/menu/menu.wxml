@@ -1,0 +1,6 @@
+<view class="menu" wx:if="{{showMenu}}" style="{{style}}">
+    <view class = 'menu-list'>
+        <view class="menu-item" bindtap="edit">编辑 </view>
+        <view class="menu-item" bindtap="delete">删除 </view>
+    </view>
+</view>

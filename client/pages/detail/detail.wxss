@@ -1,5 +1,6 @@
 .container{
     display: block;
+    overflow: hidden;
 }
 swiper{
     height: 100%;
@@ -20,11 +21,16 @@ swiper-item{
     flex-direction: column;
     background: white;
 }
-.wrap image{
+.wrap .image{
     width: 444rpx;
     height: 444rpx;
     margin-top: 80rpx;
     border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
 }
 .wrap .name{
     font-size:20px;

@@ -1,115 +1,44 @@
-import { objectToQuery } from "../../utils/util.js"
+import { reqWithToken, upload } from "../../utils/http";
+import { formatTime } from "../../utils/util";
 
+const app = getApp()
 Page({
   data: {
     animationData: {},
-    records: [
-          {
-              img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-              name: '第一次见到你已经过去',
-              date: '2019年2月9日',
-              days: '12',
-              id: '1'
-          },
-          {
-            img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-            name: '初次见面',
-            date: '2019年2月9日',
-            days: '129',
-            id: '2'
-        },
-        {
-          img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-          name: '初次见面',
-          date: '2019年2月9日',
-          days: '129',
-          id: '2'
-      },
-      {
-        img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-        name: '初次见面',
-        date: '2019年2月9日',
-        days: '129',
-        id: '2'
-    },
-    {
-      img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-      name: '初次见面',
-      date: '2019年2月9日',
-      days: '129',
-      id: '2'
+    records: [],
+    page: 1,
+    total: 0,
+    has_more: false,
+    formatTime,
+
+    cur_id: null,
+    touches: {},
+    showMenu: false
   },
-  {
-    img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-    name: '初次见面',
-    date: '2019年2月9日',
-    days: '129',
-    id: '2'
-},
-{
-  img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-  name: '初次见面',
-  date: '2019年2月9日',
-  days: '129',
-  id: '2'
-},
-{
-  img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-  name: '初次见面',
-  date: '2019年2月9日',
-  days: '129',
-  id: '2'
-},
-{
-  img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-  name: '初次见面',
-  date: '2019年2月9日',
-  days: '129',
-  id: '2'
-},
-{
-  img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-  name: '初次见面',
-  date: '2019年2月9日',
-  days: '129',
-  id: '2'
-},
-{
-  img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-  name: '初次见面',
-  date: '2019年2月9日',
-  days: '129',
-  id: '2'
-},
-{
-  img_src: 'https://cdn.dribbble.com/users/1786655/screenshots/6042308/attachments/1297830/thumbnail/__.png',
-  name: '初次见面',
-  date: '2019年2月9日',
-  days: '129',
-  id: '2'
-}
-      ]
+  onLongPress(e) {
+    this.setData({
+        cur_id: e.currentTarget.dataset.record.id,
+        touches: e.touches[0],
+        showMenu: true
+    })
   },
-  onTap: function(e){
+  onDelete() {
+    this.getRecords()
+  },
+  onShow() {
+    if(app.globalData.shouldReload){
+      this.getRecords();
+    }
+  },
+  onTap(e) {
     let url = `/pages/detail/detail?id=${e.currentTarget.dataset.record.id}`;
     wx.navigateTo({ url })
   },
   onShareAppMessage() {
     return {
-      title: '转发',
-      path: '/detail/detail'
+      title: '荏苒',
+      path: 'pages/index/index'
     }
-  },
-  record: function(){
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: res => {
-        let img = res.tempFiles[0];
-        wx.navigateTo({ url: `/pages/edit/edit?img_src=${img.path}` })
-      }
-    })
   },
   onScroll(e) {
     let y = e.detail.deltaY;
@@ -124,5 +53,46 @@ Page({
         animationData: animation.export()
       })
     }
+  },
+  getRecords() {  
+    this.setData({ show_loading: true })
+    reqWithToken('/get_records', {page: this.data.page}, 'GET', false)
+    .then(res => {
+      app.globalData.shouldReload = false;
+      let records = res.data.records.map(item => {
+        item.date = formatTime(item.date);
+        return item;
+      })
+      this.setData({
+        records: records,
+        total: res.data.total
+      })
+      if(this.data.page * 10 >= res.data.total){
+        this.setData({ has_more: false });
+      }else {
+        this.setData({ has_more: true });
+      }
+    })
+  },
+
+  loadMore() {
+    if(this.data.has_more){
+      this.setData({ page: this.data.page + 1 })
+      this.getRecords()
+    }
+  },
+  record() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: res => {
+        let img = res.tempFilePaths[0];
+        wx.navigateTo({ url: `/pages/edit/edit?img_src=${img}` })
+      }
+    })
+  },
+  onContainTap(){
+    this.setData({ showMenu: false })
   }
 })

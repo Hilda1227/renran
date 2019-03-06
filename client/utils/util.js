@@ -1,4 +1,6 @@
 const formatTime = (date, str) => {
+  // - 转化为 / 为了兼容ios
+  date = new Date(String(date).replace(/-/g, '/'));
   let year = date.getFullYear()
   let month = date.getMonth() + 1
   let day = date.getDate()
@@ -11,9 +13,10 @@ const formatTime = (date, str) => {
   }
 }
 
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
+const getTime = (str) => {
+  let matchs = str.match(/(\d+)\D+(\d+)\D+(\d+)/);
+  matchs.shift();
+  return matchs.join('-')
 }
 
 const objectToQuery = object => {
@@ -49,8 +52,45 @@ const promiseify = fn => {
   }
 }
 
+const fetch = (url, data, method = 'GET') => {
+  const BASE_URL = 'http://192.168.123.192:5000';
+  const header = {Authorization: wx.getStorageSync('token')};
+  console.log(wx.getStorageSync('token'))
+  return new Promise(function(resolve, reject) {
+    wx.request({
+      url: BASE_URL + url,
+      data,
+      header,
+      method,
+      header,
+      success: res => resolve(res),
+      fail: error => reject(error)
+    })
+  })
+}
+
+const urlTobase64 = url => {
+  return new Promise(function (resolve, reject){
+    wx.request({
+      url:url,
+      responseType: 'arraybuffer', 
+      success: res=>{
+            let base64 = wx.arrayBufferToBase64(res.data); 
+            base64　= 'data:image/jpeg;base64,' + base64;
+            resolve(base64);
+            console.log(base64)　
+      },
+      fail: error => {
+        wx.showToast({ title: "图片读取失败", icon: 'none' });
+        reject(error)
+      }
+    })
+  })
+} 
+
 module.exports = {
   formatTime,
   objectToQuery,
   throttle,
+  getTime
 }

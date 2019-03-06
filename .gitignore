@@ -1,0 +1,7 @@
+server/app/config/secure.py
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
+.idea/
+__pycache__

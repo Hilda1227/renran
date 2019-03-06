@@ -1,0 +1,26 @@
+.menu{
+    position: absolute;
+    z-index: 100;
+}
+.menu-list{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px 0;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.117647);
+    font-size: 16px;
+}
+.menu-item{
+    height: 20px;
+    width: 150px;
+    padding-left: 0.6rem;
+    line-height: 20px;
+    transition: 200ms;
+    padding: 0 8px;
+}
+.menu-item:nth-child(1){
+    margin-bottom: 20px;
+}
